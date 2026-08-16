@@ -1,0 +1,138 @@
+{
+  "theme_context": {
+    "app_type": "3d_experience / award-show promo microsite",
+    "theme": "dark",
+    "emotional_tone": "Cinematic, Luxurious, Mysterious, Exclusive",
+    "design_style": "Classic Oscars glamour, Awwwards Site-of-the-Day level, editorial asymmetry, generous spacing"
+  },
+  "colors": {
+    "background_primary": "#131a2c",
+    "background_secondary": "#0a0e17",
+    "background_tertiary": "#1e2740",
+    "accent_gold": "#d4af37",
+    "accent_gold_light": "#f3e5ab",
+    "text_primary": "#ffffff",
+    "text_secondary": "rgba(255, 255, 255, 0.7)",
+    "text_gold": "#d4af37",
+    "border_subtle": "rgba(212, 175, 55, 0.15)",
+    "glow_gold": "rgba(212, 175, 55, 0.25)"
+  },
+  "typography": {
+    "banned_fonts": ["Inter", "Roboto", "Open Sans", "Lato"],
+    "primary_heading": {
+      "family": "Cormorant Garamond",
+      "weights": [300, 400, 600, 700],
+      "usage": "Hero headers, Manifesto numbers, Section titles. Must use tight tracking (tracking-tighter) for sizes > 32px."
+    },
+    "secondary_body": {
+      "family": "Manrope",
+      "weights": [200, 300, 400],
+      "usage": "Body text, small labels, countdown numbers. Wide tracking (tracking-[0.2em]) for overlines and uppercase labels."
+    },
+    "scales": {
+      "h1": "text-5xl sm:text-6xl md:text-7xl lg:text-8xl",
+      "h2": "text-3xl sm:text-4xl md:text-5xl",
+      "h3": "text-2xl sm:text-3xl",
+      "body": "text-base leading-relaxed",
+      "labels": "text-xs tracking-[0.2em] uppercase"
+    }
+  },
+  "visual_enhancers": {
+    "textures": [
+      "Subtle SVG noise overlay across the entire page to kill digital flatness and enhance the cinematic film grain feel (opacity 2-3%)."
+    ],
+    "glows": [
+      "Gold-on-dark glow treatments. Use drop-shadow-[0_0_15px_rgba(212,175,55,0.4)] on primary gold text or active elements."
+    ],
+    "surfaces": {
+      "glassmorphism": "Use the 'Crystal Variant' for sticky header and RSVP card. bg-[#131a2c]/60, backdrop-blur-2xl, border border-[#d4af37]/20."
+    }
+  },
+  "layouts_and_grids": {
+    "general": "Never center everything. Asymmetry creates tension. Use generous spacing (py-24 to py-32 for sections).",
+    "gallery_grid": "MODE A: THE TETRIS GRID. Asymmetric layout with spanning columns (e.g., col-span-4 row-span-2 vs col-span-2 row-span-1) on a 12-column grid. Gaps should be gap-8 to gap-12.",
+    "manifesto_layout": "Overlapping editorial layout. Huge numbers (01, 02) set in gold, intersecting with paragraph text."
+  },
+  "components": {
+    "hero": {
+      "description": "Large kinetic hero with 3D canvas centerpiece. Text must be masked line-by-line on-load reveal using framer-motion.",
+      "layout": "Absolute positioned typography behind and in front of the 3D canvas for depth."
+    },
+    "countdown": {
+      "description": "Winners countdown to March 15, 2026.",
+      "styling": "Massive tabular numbers. Gold text, delicate dividers between days/hours/minutes."
+    },
+    "editorial_marquee": {
+      "description": "Slow, organic moving text ribbon.",
+      "styling": "react-fast-marquee, Cormorant Garamond, text-6xl, text-transparent with gold border (stroke), heavily spaced (gap-32)."
+    },
+    "rsvp_form": {
+      "description": "Ticket interest / RSVP.",
+      "styling": "Shadcn form components stripped of default look. Dark inputs with gold bottom borders (border-b), no full outlines. Submit button should have gold hover glow."
+    }
+  },
+  "motion": {
+    "scroll": "MUST use @studio-freight/react-lenis for smooth momentum scrolling. It adds weight and premium feel.",
+    "reveals": "Framer-motion section scroll-reveals (initial opacity 0, y 40, transition duration 1s, ease [0.16, 1, 0.3, 1]).",
+    "text_masking": "For hero text: Wrap lines in overflow-hidden spans. Animate inner text from y: 100% to y: 0%."
+  },
+  "3d_libraries": {
+    "engine": "@react-three/fiber and @react-three/drei",
+    "implementation": "Build a stylized, abstract 3D golden statuette centerpiece. DO NOT use external GLTF models. Assemble it purely from R3F primitives (e.g., a Cylinder for the base, elongated Capsules/Cylinders for legs and torso, a Sphere for the head, holding a Box/Cylinder sword).",
+    "materials": "Use MeshStandardMaterial with high metalness (1.0), moderate roughness (0.2), and color='#d4af37'.",
+    "lighting": "Cinematic lighting is CRITICAL. Use directional lights, a subtle ambient light, and Environment preset='city' (with low intensity) to create intense specular gold highlights against the dark blue background."
+  },
+  "media": {
+    "image_urls": [
+      {
+        "url": "https://images.unsplash.com/photo-1778356192459-40546f005dc6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHw0fHxyZWQlMjBjYXJwZXQlMjBnbGFtb3VyfGVufDB8fHx8MTc4Njg3NDY1Mnww&ixlib=rb-4.1.0&q=85",
+        "category": "red_carpet_gallery",
+        "description": "Stylish woman in suit and cape on red carpet"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1738081613098-caea4cb0a035?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHw0fHxob2xseXdvb2QlMjB0aGVhdHJlJTIwbmlnaHR8ZW58MHx8fHwxNzg2ODc0NjUyfDA&ixlib=rb-4.1.0&q=85",
+        "category": "venue_promo",
+        "description": "Hollywood theatre lit up at night"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1650240852447-46505dba4726?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTV8MHwxfHNlYXJjaHwzfHxnb2xkZW4lMjBhd2FyZCUyMHRyb3BoeXxlbnwwfHx8fDE3ODY4NzQ2NTJ8MA&ixlib=rb-4.1.0&q=85",
+        "category": "nominees_or_manifesto",
+        "description": "A number of oscar statues on a table"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1614080035039-af24354a6478?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHwxfHxyZWQlMjBjYXJwZXQlMjBnbGFtb3VyfGVufDB8fHx8MTc4Njg3NDY1Mnww&ixlib=rb-4.1.0&q=85",
+        "category": "red_carpet_gallery",
+        "description": "Red concrete staircase with stainless steel railings"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1657649549501-f0a887addd7c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwxfHxob2xseXdvb2QlMjB0aGVhdHJlJTIwbmlnaHR8ZW58MHx8fHwxNzg2ODc0NjUyfDA&ixlib=rb-4.1.0&q=85",
+        "category": "venue_promo",
+        "description": "Hollywood sign illuminated at night"
+      }
+    ],
+    "icons": "lucide-react for UI interactions. Use with minimal stroke widths (1px or 1.5px) for elegance."
+  },
+  "accessibility": {
+    "contrast": "Ensure gold text against #131a2c meets WCAG AA 4.5:1 ratio.",
+    "testing": "All interactive and key informational elements MUST include a data-testid attribute in kebab-case."
+  },
+  "instructions_to_main_agent": [
+    "Execute all styling in JS/Tailwind. Do not write .tsx files (the project uses .js).",
+    "Install required dependencies: @react-three/fiber, @react-three/drei, three, framer-motion, @studio-freight/react-lenis, react-fast-marquee.",
+    "Set up a global noise overlay (fixed pointer-events-none div with SVG filter) to add film grain.",
+    "For the 3D statuette: compose it meticulously using <Cylinder>, <Sphere>, <Box> from drei. Wrap it in a <Float> component for a majestic hovering effect.",
+    "Use optical alignment and negative space aggressively. Let the layout breathe with py-32 for major sections.",
+    "Avoid typical centered-text SaaS layouts. Use a strong left-aligned editorial baseline and push images into asymmetrical grid columns.",
+    "Implement masked text reveals for the hero: overflow-hidden wrapping motion.div elements translating Y."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Do not converge toward generic outputs. Break standard grid rules intentionally.",
+    "Never center align the root App container (.App { text-align: center; } is banned).",
+    "Use glass-morphism effects carefully; no fully transparent backgrounds over dynamic content.",
+    "Create depth through layered z-index hierarchy and parallax.",
+    "Avoid default transition: all. Target specific properties.",
+    "Use pre-existing Shadcn components where applicable, but override their aesthetic to match the dark cinematic theme (e.g., stripping default Vercel-like borders).",
+    "Never use placeholder image services. Only use the Unsplash URLs provided.",
+    "Every interaction needs micro-animations: hover, focus, entrance."
+  ]
+}

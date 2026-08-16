@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 224 44% 6%;
+        --foreground: 0 0% 100%;
+        --card: 222 39% 12%;
+        --card-foreground: 0 0% 100%;
+        --popover: 222 39% 12%;
+        --popover-foreground: 0 0% 100%;
+        --primary: 45 65% 52%;
+        --primary-foreground: 224 44% 6%;
+        --secondary: 222 30% 18%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 222 30% 18%;
+        --muted-foreground: 0 0% 70%;
+        --accent: 45 65% 52%;
+        --accent-foreground: 224 44% 6%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 45 65% 52% / 0.15;
+        --input: 222 30% 20%;
+        --ring: 45 65% 52%;
+        --radius: 0.25rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    html {
+        scroll-behavior: auto;
+    }
+    body {
+        @apply bg-night-deep text-white font-body antialiased;
+        letter-spacing: 0.01em;
+    }
+    ::selection {
+        background: #d4af37;
+        color: #0a0e17;
+    }
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #0a0e17;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(212, 175, 55, 0.35);
+    }
+}
+
+/* Film grain overlay */
+.grain-overlay {
+    position: fixed;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Slow editorial marquee */
+@keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+.animate-marquee {
+    animation: marquee-scroll 75s linear infinite;
+}
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+/* Outlined display text */
+.text-outline-gold {
+    -webkit-text-stroke: 1px rgba(212, 175, 55, 0.55);
+    color: transparent;
+}
+.text-outline-faint {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.14);
+    color: transparent;
+}
+
+.gold-glow {
+    filter: drop-shadow(0 0 18px rgba(212, 175, 55, 0.35));
+}
+
+/* Gold underline micro-interaction for nav */
+.link-underline {
+    position: relative;
+}
+.link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 1px;
+    background: #d4af37;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+@layer base {
+    [data-debug-wrapper="true"] {
+        display: contents !important;
+    }
+}
