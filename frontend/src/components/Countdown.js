@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { CEREMONY_DATE } from "@/data/content";
+import { EVENT_DATE, EVENT_DATE_LABEL } from "@/data/content";
 import { Reveal } from "./Reveal";
 
 const pad = (n) => String(Math.max(0, n)).padStart(2, "0");
 
 function getParts() {
-    const diff = CEREMONY_DATE.getTime() - Date.now();
+    const diff = EVENT_DATE.getTime() - Date.now();
     if (diff <= 0) return null;
     return {
         days: Math.floor(diff / 86400000),
@@ -28,19 +28,19 @@ export default function Countdown() {
             <Reveal className="flex flex-col lg:flex-row lg:items-end gap-10 lg:gap-20">
                 <div className="shrink-0">
                     <p className="text-xs tracking-[0.35em] uppercase text-gold">
-                        {parts ? "Until the envelopes open" : "The night is written in gold"}
+                        {parts ? "Avant la montée des marches" : "Le rideau s'est levé"}
                     </p>
                     <p className="mt-3 font-display text-2xl text-white/70 italic">
-                        {parts ? "Sunday, March 15 · 2026" : "March 15, 2026 — engraved forever"}
+                        {parts ? EVENT_DATE_LABEL : "3 octobre 2026 — une nuit en or"}
                     </p>
                 </div>
                 {parts ? (
                     <div className="flex items-start gap-6 sm:gap-12" data-testid="countdown-timer">
                         {[
-                            [parts.days, "Days"],
-                            [parts.hours, "Hours"],
+                            [parts.days, "Jours"],
+                            [parts.hours, "Heures"],
                             [parts.minutes, "Minutes"],
-                            [parts.seconds, "Seconds"],
+                            [parts.seconds, "Secondes"],
                         ].map(([value, label], i) => (
                             <div key={label} className="flex items-center gap-6 sm:gap-12">
                                 {i > 0 && <span className="text-gold/40 font-display text-4xl sm:text-6xl -mt-2">·</span>}
@@ -55,7 +55,7 @@ export default function Countdown() {
                     </div>
                 ) : (
                     <p className="font-display text-3xl sm:text-5xl text-gold gold-glow italic" data-testid="countdown-past">
-                        A night for the history books.
+                        Quelle nuit ce fut.
                     </p>
                 )}
             </Reveal>

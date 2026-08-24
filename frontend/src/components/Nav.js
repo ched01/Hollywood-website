@@ -20,10 +20,10 @@ export default function Nav({ onNavigate }) {
             <div className="flex items-center justify-between px-6 sm:px-12 lg:px-20 py-5">
                 <button
                     data-testid="nav-logo"
-                    onClick={() => onNavigate("#the-night")}
-                    className="font-display text-xl sm:text-2xl tracking-[0.18em] text-gold gold-glow"
+                    onClick={() => onNavigate("#home")}
+                    className="font-display italic text-xl sm:text-2xl tracking-wide text-gold gold-glow"
                 >
-                    OSCARS <span className="text-white/60 text-sm align-super tracking-normal">'26</span>
+                    Hollywood <span className="not-italic text-white/60 text-sm align-super">'26</span>
                 </button>
                 <nav className="hidden md:flex items-center gap-10">
                     {NAV_LINKS.map((link) => (

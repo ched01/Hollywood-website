@@ -4,11 +4,11 @@ import "@/App.css";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Countdown from "@/components/Countdown";
+import Trailer from "@/components/Trailer";
 import Marquee from "@/components/Marquee";
-import Manifesto from "@/components/Manifesto";
-import Nominees from "@/components/Nominees";
+import Invitation from "@/components/Invitation";
+import Dresscode from "@/components/Dresscode";
 import Gallery from "@/components/Gallery";
-import Venue from "@/components/Venue";
 import Rsvp from "@/components/Rsvp";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
@@ -29,11 +29,11 @@ function Page() {
             <main>
                 <Hero onNavigate={navigate} />
                 <Countdown />
+                <Trailer />
                 <Marquee />
-                <Manifesto />
-                <Nominees />
+                <Invitation />
+                <Dresscode />
                 <Gallery />
-                <Venue />
                 <Rsvp />
             </main>
             <Footer onNavigate={navigate} />

@@ -1,36 +1,34 @@
-# PRD — Oscars 2026: The 98th Academy Awards (3D Concept Microsite)
+# PRD — Once Upon a Time in Hollywood (Gala privé pour Lavinia)
 
 ## Original Problem Statement
-"Build a visually stunning 3D website for the 2026 oscars ceremony" — refined to: Awwwards-level full ceremony experience + event promo, react-three-fiber golden statuette centerpiece, classic Oscars glamour in black + gold with night blue #131a2c, kinetic hero with masked line reveal, numbered manifesto chapters, slow editorial marquee, framer-motion reveals, lenis smooth scrolling.
+Initialement : "Build a visually stunning 3D website for the 2026 oscars ceremony". Évolué en : site d'invitation privé, entièrement en français (titre en anglais), pour un gala "Once Upon a Time in Hollywood" donné par M. et Mme Anton Cox pour leur fille Lavinia, le 03/10/2026 à 20h au Piesmont (Lasne). Niveau Awwwards : hero 3D Oscar, révélation masquée ligne par ligne, marquee éditorial, chapitres numérotés, framer-motion + lenis.
 
 ## Architecture
-- Frontend: React 19 + Tailwind + framer-motion + lenis (smooth scroll) + @react-three/fiber + @react-three/drei (procedural 3D statuette, Lightformer env — no external HDR/models).
-- Backend: FastAPI + MongoDB (motor). RSVP endpoints only.
-- Key files: `/app/frontend/src/App.js`, `components/{Hero,Statuette3D,Countdown,Marquee,Manifesto,Nominees,Gallery,Venue,Rsvp,Footer,Nav,Reveal}.js`, `data/content.js`, `/app/backend/server.py`, `/app/design_guidelines.json`.
+- Frontend : React 19 + Tailwind + framer-motion + lenis + @react-three/fiber/drei.
+- Modèle 3D : vrai Oscar (STL de stlmodels.ru, converti en GLB 60k faces via trimesh) → `/app/frontend/public/models/oscar.glb`, matériau or appliqué au runtime.
+- Vidéo teaser : `/app/frontend/public/videos/teaser.mp4` (tapis rouge, Pixabay CDN).
+- Backend : FastAPI + MongoDB. RSVP : first_name, last_name, email, attending, vegetarian, message.
+- Sections : Accueil (hero 3D + compte à rebours), Teaser, Marquee, Invitation (carton officiel + déroulement 20h/21h/23h + infos pratiques), Dress Code, Photos (à venir), RSVP, Footer (crédit Charles-Edouard de Meeûs).
 
-## User Personas
-- Film fan exploring contenders and the red carpet gallery.
-- Industry guest requesting ceremony seating (RSVP).
-- Press/visitor checking date, venue, broadcast info.
+## Personas
+- Invité(e) du gala : lit l'invitation, consulte le déroulement et le dress code, confirme sa présence.
+- Hôtes (famille Cox) : collectent les réponses RSVP.
 
-## Core Requirements (static)
-- Cinematic dark theme (#131a2c / #0a0e17 / gold #d4af37), Cormorant Garamond + Manrope, film grain overlay.
-- Hero: 3D golden statuette, masked line-by-line reveal, parallax on scroll, giant outline "OSCARS" backdrop.
-- Countdown to March 15, 2026 17:00 PT (graceful "history books" state once passed).
-- Editorial marquee, manifesto chapters 01–03, contenders tabs (curated shortlist), tetris red-carpet gallery, venue facts, RSVP → MongoDB.
-
-## Implemented (2026-08-16)
-- All sections above; backend POST /api/rsvp + GET /api/rsvp/count; live seat counter in UI; sonner toasts; full data-testid coverage.
-- Verified: RSVP API (curl), UI submit flow end-to-end, category tabs, gallery rendering, hero 3D canvas.
+## Implémenté (2026-08-24)
+- Site intégralement en français ; titre conservé en anglais ; aucune référence à 1969 ou au film.
+- Invitation avec texte exact demandé + déroulement en 3 étapes (Cocktail 20h, Dîner & Cérémonie 21h, Soirée 23h).
+- Informations pratiques : date, portes 20h, Le Piesmont, Allée des Grands Clos 8 · 1380 Lasne, dress code.
+- Photos : message "disponibles après la soirée".
+- RSVP : prénom/nom/e-mail, présent(e)/absent(e), végétarien(ne) ou non, mot pour les hôtes → MongoDB. Aucun système de placement.
+- Footer : crédit "Site réalisé par Charles-Edouard de Meeûs · hello@cedemeeus.be" (mailto).
+- Vérifié : API RSVP (curl), soumission UI de bout en bout, teaser play/pause, compte à rebours actif (3 oct. 2026).
 
 ## Notes
-- Nominees are a CURATED shortlist (labeled as such), not official Academy nominations.
-- Countdown shows the post-ceremony state when viewed after March 15, 2026 (sandbox clock is past the date).
-- PostHog snippet in index.html throws a harmless console error (platform boilerplate, pre-existing).
+- Modèle Oscar : STL 25MB simplifié en GLB ~1MB ; rotation corrigée (Y-up, à l'endroit).
+- Erreur console PostHog (boilerplate plateforme) sans impact.
 
-## Backlog / Next Tasks
-- P1: Winners reveal mode (post-ceremony results per category).
-- P1: Trailer/teaser video section (event promo).
-- P2: Red carpet gallery lightbox + more photography.
-- P2: RSVP confirmation email (Resend integration).
-- P2: Multi-language / press-kit download.
+## Backlog
+- P1 : Envoi d'un e-mail de confirmation RSVP (Resend).
+- P1 : Page admin/lecture des réponses pour les hôtes (export liste).
+- P2 : Galerie photos réelle après la soirée.
+- P2 : Version néerlandaise/anglaise si besoin.

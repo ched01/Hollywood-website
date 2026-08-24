@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
@@ -7,15 +7,12 @@ import { Reveal, Overline } from "./Reveal";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
+const INITIAL = { first_name: "", last_name: "", email: "", attending: true, vegetarian: false, message: "" };
+
 export default function Rsvp() {
-    const [form, setForm] = useState({ name: "", email: "", guests: 1 });
+    const [form, setForm] = useState(INITIAL);
     const [submitting, setSubmitting] = useState(false);
     const [done, setDone] = useState(false);
-    const [count, setCount] = useState(null);
-
-    useEffect(() => {
-        axios.get(`${API}/rsvp/count`).then((r) => setCount(r.data)).catch(() => {});
-    }, [done]);
 
     const submit = async (e) => {
         e.preventDefault();
@@ -23,9 +20,9 @@ export default function Rsvp() {
         try {
             await axios.post(`${API}/rsvp`, form);
             setDone(true);
-            toast.success("Your request is with the Academy office.");
+            toast.success("Votre réponse est bien arrivée.");
         } catch (err) {
-            toast.error(err.response?.data?.detail?.[0]?.msg || "Something went wrong — please try again.");
+            toast.error(err.response?.data?.detail?.[0]?.msg || "Une erreur est survenue — veuillez réessayer.");
         } finally {
             setSubmitting(false);
         }
@@ -34,23 +31,28 @@ export default function Rsvp() {
     const inputCls =
         "w-full bg-transparent border-0 border-b border-white/25 focus:border-gold focus:ring-0 outline-none px-0 py-3 text-lg font-light text-white placeholder:text-white/30 transition-colors duration-500";
 
+    const choiceCls = (active) =>
+        `px-5 py-3 text-[11px] tracking-[0.2em] uppercase border transition-all duration-500 ${
+            active
+                ? "border-gold bg-gold text-night-deep"
+                : "border-white/20 text-white/60 hover:border-gold/60 hover:text-gold"
+        }`;
+
     return (
         <section id="rsvp" data-testid="rsvp-section" className="relative bg-night-deep px-6 sm:px-12 lg:px-20 py-28 sm:py-36">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-24">
                 <Reveal>
-                    <Overline>Tickets & RSVP</Overline>
+                    <Overline>RSVP</Overline>
                     <h2 className="mt-4 font-display text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.02]">
-                        Request your<br /><em className="text-gold">place in the dark.</em>
+                        Confirmez<br /><em className="text-gold">votre venue.</em>
                     </h2>
                     <p className="mt-8 max-w-md text-base font-light leading-relaxed text-white/60">
-                        Ceremony seating is by invitation of the Academy. Register your interest and
-                        the office will respond as allocations open.
+                        Une réponse, un mot pour les hôtes si le cœur vous en dit —
+                        et le tapis rouge n'aura plus qu'à vous attendre.
                     </p>
-                    {count && (
-                        <p data-testid="rsvp-count" className="mt-10 font-display text-2xl italic text-gold/90">
-                            {count.seats.toLocaleString()} seats already requested.
-                        </p>
-                    )}
+                    <p className="mt-10 font-display text-xl italic text-gold/80">
+                        Merci de répondre avant le 12 septembre 2026.
+                    </p>
                 </Reveal>
 
                 <Reveal delay={0.12}>
@@ -68,17 +70,18 @@ export default function Rsvp() {
                                     <span className="flex h-14 w-14 items-center justify-center rounded-full border border-gold text-gold">
                                         <Check size={22} strokeWidth={1.5} />
                                     </span>
-                                    <p className="font-display text-3xl sm:text-4xl">Consider it noted in gold ink.</p>
+                                    <p className="font-display text-3xl sm:text-4xl">Votre réponse est scellée à l'or.</p>
                                     <p className="text-sm font-light text-white/60 leading-relaxed">
-                                        We've received your request, {form.name.split(" ")[0]}. Watch your inbox as
-                                        seating allocations open.
+                                        {form.attending
+                                            ? `Merci ${form.first_name} — le tapis rouge vous attend le 3 octobre.`
+                                            : `Merci ${form.first_name} — vous nous manquerez, et Lavinia le saura.`}
                                     </p>
                                     <button
                                         data-testid="rsvp-again-button"
-                                        onClick={() => { setDone(false); setForm({ name: "", email: "", guests: 1 }); }}
+                                        onClick={() => { setDone(false); setForm(INITIAL); }}
                                         className="text-[11px] tracking-[0.3em] uppercase text-gold link-underline"
                                     >
-                                        Submit another request
+                                        Répondre pour un autre invité
                                     </button>
                                 </motion.div>
                             ) : (
@@ -91,21 +94,34 @@ export default function Rsvp() {
                                     exit={{ opacity: 0, y: -16 }}
                                     className="space-y-10"
                                 >
-                                    <div>
-                                        <label htmlFor="rsvp-name" className="text-[10px] tracking-[0.3em] uppercase text-gold/80">Full name</label>
-                                        <input
-                                            id="rsvp-name"
-                                            data-testid="rsvp-name-input"
-                                            required
-                                            minLength={2}
-                                            value={form.name}
-                                            onChange={(e) => setForm({ ...form, name: e.target.value })}
-                                            placeholder="Grace Kelly"
-                                            className={inputCls}
-                                        />
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                                        <div>
+                                            <label htmlFor="rsvp-firstname" className="text-[10px] tracking-[0.3em] uppercase text-gold/80">Prénom</label>
+                                            <input
+                                                id="rsvp-firstname"
+                                                data-testid="rsvp-firstname-input"
+                                                required
+                                                value={form.first_name}
+                                                onChange={(e) => setForm({ ...form, first_name: e.target.value })}
+                                                placeholder="Grace"
+                                                className={inputCls}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="rsvp-lastname" className="text-[10px] tracking-[0.3em] uppercase text-gold/80">Nom</label>
+                                            <input
+                                                id="rsvp-lastname"
+                                                data-testid="rsvp-lastname-input"
+                                                required
+                                                value={form.last_name}
+                                                onChange={(e) => setForm({ ...form, last_name: e.target.value })}
+                                                placeholder="Kelly"
+                                                className={inputCls}
+                                            />
+                                        </div>
                                     </div>
                                     <div>
-                                        <label htmlFor="rsvp-email" className="text-[10px] tracking-[0.3em] uppercase text-gold/80">Email</label>
+                                        <label htmlFor="rsvp-email" className="text-[10px] tracking-[0.3em] uppercase text-gold/80">Adresse e-mail</label>
                                         <input
                                             id="rsvp-email"
                                             data-testid="rsvp-email-input"
@@ -113,29 +129,63 @@ export default function Rsvp() {
                                             type="email"
                                             value={form.email}
                                             onChange={(e) => setForm({ ...form, email: e.target.value })}
-                                            placeholder="you@studio.com"
+                                            placeholder="vous@exemple.com"
                                             className={inputCls}
                                         />
                                     </div>
                                     <div>
-                                        <span className="text-[10px] tracking-[0.3em] uppercase text-gold/80">Seats</span>
-                                        <div className="mt-4 flex gap-3">
-                                            {[1, 2, 3, 4].map((n) => (
-                                                <button
-                                                    key={n}
-                                                    type="button"
-                                                    data-testid={`rsvp-guests-${n}`}
-                                                    onClick={() => setForm({ ...form, guests: n })}
-                                                    className={`h-11 w-11 border font-display text-lg transition-all duration-400 ${
-                                                        form.guests === n
-                                                            ? "border-gold bg-gold text-night-deep"
-                                                            : "border-white/20 text-white/60 hover:border-gold/60 hover:text-gold"
-                                                    }`}
-                                                >
-                                                    {n}
-                                                </button>
-                                            ))}
+                                        <span className="text-[10px] tracking-[0.3em] uppercase text-gold/80">Votre réponse</span>
+                                        <div className="mt-4 flex flex-wrap gap-3">
+                                            <button
+                                                type="button"
+                                                data-testid="rsvp-attending-yes"
+                                                onClick={() => setForm({ ...form, attending: true })}
+                                                className={choiceCls(form.attending)}
+                                            >
+                                                Présent(e)
+                                            </button>
+                                            <button
+                                                type="button"
+                                                data-testid="rsvp-attending-no"
+                                                onClick={() => setForm({ ...form, attending: false })}
+                                                className={choiceCls(!form.attending)}
+                                            >
+                                                Absent(e)
+                                            </button>
                                         </div>
+                                    </div>
+                                    <div>
+                                        <span className="text-[10px] tracking-[0.3em] uppercase text-gold/80">Régime alimentaire</span>
+                                        <div className="mt-4 flex flex-wrap gap-3">
+                                            <button
+                                                type="button"
+                                                data-testid="rsvp-diet-classic"
+                                                onClick={() => setForm({ ...form, vegetarian: false })}
+                                                className={choiceCls(!form.vegetarian)}
+                                            >
+                                                Je ne suis pas végétarien(ne)
+                                            </button>
+                                            <button
+                                                type="button"
+                                                data-testid="rsvp-diet-vegetarian"
+                                                onClick={() => setForm({ ...form, vegetarian: true })}
+                                                className={choiceCls(form.vegetarian)}
+                                            >
+                                                Je suis végétarien(ne)
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="rsvp-message" className="text-[10px] tracking-[0.3em] uppercase text-gold/80">Un mot pour les hôtes</label>
+                                        <textarea
+                                            id="rsvp-message"
+                                            data-testid="rsvp-message-input"
+                                            rows={3}
+                                            value={form.message}
+                                            onChange={(e) => setForm({ ...form, message: e.target.value })}
+                                            placeholder="Quelques mots, si le cœur vous en dit…"
+                                            className={`${inputCls} resize-none`}
+                                        />
                                     </div>
                                     <button
                                         data-testid="rsvp-submit-button"
@@ -145,7 +195,7 @@ export default function Rsvp() {
                                     >
                                         <span className="absolute inset-0 bg-gold translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
                                         <span className="relative flex items-center justify-center gap-3">
-                                            {submitting ? "Sealing the envelope…" : "Request invitation"}
+                                            {submitting ? "Cachetage de l'enveloppe…" : "Confirmer ma réponse"}
                                             <ArrowRight size={14} strokeWidth={1.5} />
                                         </span>
                                     </button>

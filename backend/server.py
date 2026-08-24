@@ -6,7 +6,7 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
-from typing import List
+from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
 
@@ -36,21 +36,27 @@ class StatusCheckCreate(BaseModel):
 class Rsvp(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    name: str
+    first_name: str
+    last_name: str
     email: EmailStr
-    guests: int = 1
+    attending: bool
+    vegetarian: bool = False
+    message: Optional[str] = ""
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class RsvpCreate(BaseModel):
-    name: str = Field(min_length=2, max_length=80)
+    first_name: str = Field(min_length=1, max_length=60)
+    last_name: str = Field(min_length=1, max_length=60)
     email: EmailStr
-    guests: int = Field(default=1, ge=1, le=4)
+    attending: bool
+    vegetarian: bool = False
+    message: Optional[str] = Field(default="", max_length=600)
 
 
 @api_router.get("/")
 async def root():
-    return {"message": "Oscars 2026 API"}
+    return {"message": "Once Upon a Time in Hollywood — API"}
 
 
 @api_router.post("/rsvp", response_model=Rsvp)
@@ -64,9 +70,8 @@ async def create_rsvp(input: RsvpCreate):
 
 @api_router.get("/rsvp/count")
 async def rsvp_count():
-    count = await db.rsvps.count_documents({})
-    seats = sum([r.get('guests', 1) for r in await db.rsvps.find({}, {"_id": 0, "guests": 1}).to_list(10000)])
-    return {"requests": count, "seats": seats}
+    count = await db.rsvps.count_documents({"attending": True})
+    return {"attending": count}
 
 
 @api_router.post("/status", response_model=StatusCheck)
