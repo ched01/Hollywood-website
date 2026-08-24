@@ -41,7 +41,7 @@ export default function Hero({ onNavigate }) {
 
             <div className="absolute inset-0 z-[6] pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(10,14,23,0.75)_100%)]" />
 
-            <div className="relative z-10 flex min-h-screen flex-col justify-end px-6 pb-16 sm:px-12 lg:px-20 pointer-events-none">
+            <div className="relative z-10 flex min-h-screen flex-col justify-end px-6 pb-28 sm:px-12 lg:px-20 pointer-events-none">
                 <div className="max-w-5xl">
                     <MaskedLine delay={0.15}>
                         <span className="text-xs sm:text-sm tracking-[0.45em] uppercase text-gold font-body">

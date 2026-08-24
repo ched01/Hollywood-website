@@ -14,7 +14,12 @@ Initialement : "Build a visually stunning 3D website for the 2026 oscars ceremon
 - Invité(e) du gala : lit l'invitation, consulte le déroulement et le dress code, confirme sa présence.
 - Hôtes (famille Cox) : collectent les réponses RSVP.
 
-## Implémenté (2026-08-24)
+## Implémenté (2026-08-24, mise à jour 2)
+- E-mail de confirmation doré automatique à chaque RSVP (Resend managé, EMERGENT_EMAIL_KEY, template FR dark/gold, gate de sécurité _assert_safe_email).
+- Page hôtes protégée /hotes : mot de passe (HOST_PASSWORD dans .env) → JWT 12h → registre des réponses, stats (présents/absents/végétariens), export CSV, copie des e-mails. Anti brute-force : 5 échecs = blocage 15 min.
+- Bande-son « Bossa Antigua » (Kevin MacLeod, CC BY 4.0, crédit en footer) avec bouton lecture/pause flottant doré.
+- Footer : crédit cliquable www.cedemeeus.be + mailto.
+- Vérifié : envoi e-mail (HTTP 202 vers delivered@resend.dev), login hôtes OK/KO, tableau + stats, lecture audio réelle.
 - Site intégralement en français ; titre conservé en anglais ; aucune référence à 1969 ou au film.
 - Invitation avec texte exact demandé + déroulement en 3 étapes (Cocktail 20h, Dîner & Cérémonie 21h, Soirée 23h).
 - Informations pratiques : date, portes 20h, Le Piesmont, Allée des Grands Clos 8 · 1380 Lasne, dress code.

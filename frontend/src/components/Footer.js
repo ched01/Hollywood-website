@@ -32,15 +32,23 @@ export default function Footer({ onNavigate }) {
             >
                 Once upon a time
             </p>
-            <div className="mt-8 flex flex-col sm:flex-row justify-between gap-3 text-[10px] tracking-[0.25em] uppercase text-white/30">
-                <span>© MMXXVI · Une affaire privée</span>
-                <a
-                    data-testid="footer-credit"
-                    href="mailto:hello@cedemeeus.be"
-                    className="hover:text-gold transition-colors duration-300"
-                >
-                    Site réalisé par Charles-Edouard de Meeûs · hello@cedemeeus.be
-                </a>
+            <div className="mt-8 flex flex-col gap-2 text-[10px] tracking-[0.25em] uppercase text-white/30">
+                <div className="flex flex-col sm:flex-row justify-between gap-3">
+                    <span>© MMXXVI · Une affaire privée</span>
+                    <span className="text-[10px] tracking-[0.25em] uppercase text-white/30" data-testid="footer-credit">
+                        Site réalisé par{" "}
+                        <a href="https://www.cedemeeus.be" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors duration-300">
+                            Charles-Edouard de Meeûs · www.cedemeeus.be
+                        </a>
+                        {" · "}
+                        <a href="mailto:hello@cedemeeus.be" className="hover:text-gold transition-colors duration-300">
+                            hello@cedemeeus.be
+                        </a>
+                    </span>
+                </div>
+                <span className="normal-case tracking-normal text-white/25">
+                    Musique : « Bossa Antigua » — Kevin MacLeod (incompetech.com), licence CC BY 4.0
+                </span>
             </div>
         </footer>
     );

@@ -73,8 +73,8 @@ export default function Rsvp() {
                                     <p className="font-display text-3xl sm:text-4xl">Votre réponse est scellée à l'or.</p>
                                     <p className="text-sm font-light text-white/60 leading-relaxed">
                                         {form.attending
-                                            ? `Merci ${form.first_name} — le tapis rouge vous attend le 3 octobre.`
-                                            : `Merci ${form.first_name} — vous nous manquerez, et Lavinia le saura.`}
+                                            ? `Merci ${form.first_name} — le tapis rouge vous attend le 3 octobre. Un e-mail de confirmation est en route.`
+                                            : `Merci ${form.first_name} — vous nous manquerez. Un e-mail de confirmation est en route.`}
                                     </p>
                                     <button
                                         data-testid="rsvp-again-button"

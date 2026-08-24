@@ -1,6 +1,7 @@
 import { ReactLenis, useLenis } from "lenis/react";
 import "lenis/dist/lenis.css";
 import "@/App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Countdown from "@/components/Countdown";
@@ -11,6 +12,8 @@ import Dresscode from "@/components/Dresscode";
 import Gallery from "@/components/Gallery";
 import Rsvp from "@/components/Rsvp";
 import Footer from "@/components/Footer";
+import AmbientMusic from "@/components/AmbientMusic";
+import Hosts from "@/components/Hosts";
 import { Toaster } from "@/components/ui/sonner";
 
 function Page() {
@@ -37,16 +40,28 @@ function Page() {
                 <Rsvp />
             </main>
             <Footer onNavigate={navigate} />
-            <Toaster theme="dark" position="bottom-right" />
+            <AmbientMusic />
         </div>
+    );
+}
+
+function MainSite() {
+    return (
+        <ReactLenis root options={{ lerp: 0.08, smoothWheel: true }}>
+            <Page />
+        </ReactLenis>
     );
 }
 
 function App() {
     return (
-        <ReactLenis root options={{ lerp: 0.08, smoothWheel: true }}>
-            <Page />
-        </ReactLenis>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<MainSite />} />
+                <Route path="/hotes" element={<Hosts />} />
+            </Routes>
+            <Toaster theme="dark" position="bottom-right" />
+        </BrowserRouter>
     );
 }
 
